@@ -59,74 +59,73 @@ function Contact() {
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-lg-7">
-            <div className="contact-card">
-              <div className="text-center mb-4">
-                <span className="section-label">GET IN TOUCH</span>
-                <h2>Send Us an Inquiry</h2>
-                <p>Have a question? We'd love to hear from you.</p>
+
+            <div className="text-center mb-4">
+              <h2>Contact Us</h2>
+              <p>Have a question? We'd love to hear from you.</p>
+            </div>
+
+            {status === 'success' && (
+              <div className="alert alert-success">
+                Your inquiry has been submitted successfully!
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div className="alert alert-danger">
+                Unable to submit your inquiry. Please try again.
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label">Your Name</label>
+                <input
+                  className="form-control custom-input"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter your name"
+                  required
+                />
               </div>
 
-              {status === 'success' && (
-                <div className="alert alert-success">
-                  Your inquiry has been submitted successfully!
-                </div>
-              )}
+              <div className="mb-3">
+                <label className="form-label">Email Address</label>
+                <input
+                  className="form-control custom-input"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
 
-              {status === 'error' && (
-                <div className="alert alert-danger">
-                  Unable to submit your inquiry. Please try again.
-                </div>
-              )}
+              <div className="mb-4">
+                <label className="form-label">Your Message</label>
+                <textarea
+                  className="form-control custom-input"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Write your message..."
+                  rows="5"
+                  required
+                />
+              </div>
 
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label className="form-label">Your Name</label>
-                  <input
-                    className="form-control custom-input"
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Enter your name"
-                    required
-                  />
-                </div>
+              <button
+                className="btn btn-wine w-100"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Submitting...' : 'Submit Inquiry'}
+              </button>
+            </form>
 
-                <div className="mb-3">
-                  <label className="form-label">Email Address</label>
-                  <input
-                    className="form-control custom-input"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="form-label">Your Message</label>
-                  <textarea
-                    className="form-control custom-input"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Write your message..."
-                    rows="5"
-                    required
-                  />
-                </div>
-
-                <button
-                  className="btn btn-wine w-100"
-                  type="submit"
-                  disabled={loading}
-                >
-                  {loading ? 'Submitting...' : 'Submit Inquiry'}
-                </button>
-              </form>
-            </div>
           </div>
         </div>
       </div>

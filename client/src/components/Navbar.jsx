@@ -1,27 +1,17 @@
-
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand navbar-dark site-navbar">
+    <nav className="navbar navbar-expand-lg wine-navbar">
       <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">
-          <span className="brand-mark">F</span>
-          FSD Capstone
+        <Link className="navbar-brand text-white" to="/">
+          MyStore
         </Link>
 
-        <div className="navbar-nav ms-auto flex-row">
-          <NavLink className="nav-link" to="/" end>
-            Home
-          </NavLink>
-
-          <NavLink className="nav-link" to="/about">
-            About
-          </NavLink>
-
-          <NavLink className="nav-link" to="/contact">
-            Contact
-          </NavLink>
+        <div className="navbar-nav ms-auto">
+          <Link className="nav-link" to="/">Home</Link>
+          <Link className="nav-link" to="/about">About Us</Link>
+          <Link className="nav-link" to="/contact">Contact Us</Link>
         </div>
       </div>
     </nav>
