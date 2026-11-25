@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 function Contact() {
@@ -6,14 +7,22 @@ function Contact() {
     email: '',
     message: ''
   });
+
   const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
-      ...formData,[e.target.name]: e.target.value
+      ...formData,
+      [e.target.name]: e.target.value
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus('');
+    setLoading(true);
+
     try {
       const response = await fetch(
         'http://localhost:5000/api/inquiries',
@@ -25,35 +34,104 @@ function Contact() {
           body: JSON.stringify(formData)
         }
       );
+
       const data = await response.json();
+
       if (!response.ok) {
         throw new Error(data.message);
       }
-      setStatus(data.message);
-      setFormData({ name: '', email: '', message: '' });
+
+      setStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      });
     } catch (error) {
-      setStatus('Unable to submit inquiry. Please try again.');
+      setStatus('error');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Contact Us</h2>
-      <p>Have a question? Send us an inquiry.</p>
+    <section className="contact-section">
+      <div className="container py-5">
+        <div className="row justify-content-center">
+          <div className="col-lg-7">
+            <div className="contact-card">
+              <div className="text-center mb-4">
+                <span className="section-label">GET IN TOUCH</span>
+                <h2>Send Us an Inquiry</h2>
+                <p>Have a question? We'd love to hear from you.</p>
+              </div>
 
-      <form onSubmit={handleSubmit}>
-        <input className="form-control mb-3" name="name" value={formData.name} 
-        onChange={handleChange} placeholder="Your Name" required/>
-        <input className="form-control mb-3" name="email" type="email" value={formData.email} 
-        onChange={handleChange} placeholder="Your Email" required/>
-        <textarea className="form-control mb-3" name="message" value={formData.message} 
-        onChange={handleChange} placeholder="Your Message" rows="4" required/>
-        <button className="btn btn-primary" type="submit">
-          Submit Inquiry
-        </button>
-      </form>
-      {status && <p className="mt-3">{status}</p>}
-    </div>
+              {status === 'success' && (
+                <div className="alert alert-success">
+                  Your inquiry has been submitted successfully!
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="alert alert-danger">
+                  Unable to submit your inquiry. Please try again.
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label">Your Name</label>
+                  <input
+                    className="form-control custom-input"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Enter your name"
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Email Address</label>
+                  <input
+                    className="form-control custom-input"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label className="form-label">Your Message</label>
+                  <textarea
+                    className="form-control custom-input"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Write your message..."
+                    rows="5"
+                    required
+                  />
+                </div>
+
+                <button
+                  className="btn btn-wine w-100"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? 'Submitting...' : 'Submit Inquiry'}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
+
 export default Contact;
