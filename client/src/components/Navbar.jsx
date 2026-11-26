@@ -7,7 +7,6 @@ function Navbar() {
         <Link className="navbar-brand text-white" to="/">
           MyStore
         </Link>
-
         <div className="navbar-nav ms-auto">
           <Link className="nav-link" to="/">Home</Link>
           <Link className="nav-link" to="/about">About Us</Link>
@@ -17,5 +16,4 @@ function Navbar() {
     </nav>
   );
 }
-
 export default Navbar;
